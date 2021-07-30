@@ -22,13 +22,13 @@ library(gridExtra)
 ##Introduction
      Data was collected using an acoustic Doppler velocimeter and a dissolved oxygen logger. For each site, one along the Allegheny River and two along the Monongahela River, graphs of height vs dissolved oxygen and height vs velocity are shown. The Reynolds Stress Tensors are also shown for four different depths.
      
-The Reynolds Stress Tensor ......
-
 Reynolds Stress Tensor Equation:
 
 \begin{equation}
 \sigma_{ij} = \rho_0 \begin{bmatrix} \overline{u^2} & \overline{uv} & \overline{uw}\\ \overline{vu} & \overline{v^2} & \overline{vw}\\ \overline{wu} & \overline{wv} & \overline{w^2} \end{bmatrix}
 \end{equation}
+
+Normal stresses are diagonal in the tensor and sheer stresses are off-diagonal. The turbulent fluctuations exert a stress on the flow. If the graph appears isotrophic, there is no directional preference but if the graph appears anisotropic 
 
 
 
@@ -44,7 +44,9 @@ p1 <- ggplot(DO528AR214, aes(x = DO.mg.l. , y= height.m.))+
   labs(x = "DO (mg/l)", y = "Height (m)") +
   ggtitle("Dissolved Oxygen") +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
-  theme(axis.text = element_text(face = "plain", size = 12))
+  theme(axis.text = element_text(face = "plain", size = 6)) +
+  theme(aspect.ratio = 24/9)
+  
 ```
 
 ```{r warning=FALSE, echo=FALSE}
@@ -52,9 +54,10 @@ p1 <- ggplot(DO528AR214, aes(x = DO.mg.l. , y= height.m.))+
 p2 <- ggplot(DO528AR214, aes(x = U.m.s. , y= height.m.))+
   geom_point() +
   labs(x = "Average Velocity (m/s)", y = "Height (m)") +
-  ggtitle("Velocity profile") +
+  ggtitle("Velocity") +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
-  theme(axis.text = element_text(face = "plain", size = 12))
+  theme(axis.text = element_text(face = "plain", size = 6)) +
+  theme(aspect.ratio = 20/9)
 
 ```
 
@@ -112,13 +115,11 @@ df528AR214 <- data.frame(ui, vi, wi)#creates data frame
 #plots at each depth
 p3 <- ggplot(df528AR214, aes(x= wi, y= vi)) +
   geom_point() +
-  xlab(TeX('$w_i$')) +
-  ylab(TeX('$v_i$'))+
-  scale_y_continuous(breaks = c(-2, 0, 2))+
-  scale_x_continuous(breaks = c(-2, 0, 2))+
+  xlim(-0.5, 0.5) +
+  ylim(-0.5, 0.5) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 6))
+  theme(axis.text = element_text(face = "plain", size = 4))
   
 ```
 
@@ -154,13 +155,12 @@ df528AR214 <- data.frame(ui, vi, wi)#creates data frame
 #plots at each depth
 p4 <- ggplot(df528AR214, aes(x= wi, y= vi)) +
   geom_point() +
-  xlab(TeX('$w_i$')) +
   ylab(TeX('$v_i$'))+
-  scale_y_continuous(breaks = c(-2, 0, 2))+
-  scale_x_continuous(breaks = c(-2, 0, 2))+
+  xlim(-0.5, 0.5) +
+  ylim(-0.5, 0.5) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 6))
+  theme(axis.text = element_text(face = "plain", size = 4))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
@@ -195,13 +195,11 @@ df528AR214 <- data.frame(ui, vi, wi)#creates data frame
 #plots at each depth
 p5 <- ggplot(df528AR214, aes(x= wi, y= vi)) +
   geom_point() +
-  xlab(TeX('$w_i$')) +
-  ylab(TeX('$v_i$'))+
-  scale_y_continuous(breaks = c(-2, 0, 2))+
-  scale_x_continuous(breaks = c(-2, 0, 2))+
+  xlim(-0.5, 0.5) +
+  ylim(-0.5, 0.5) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 6))
+  theme(axis.text = element_text(face = "plain", size = 4))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
@@ -237,12 +235,11 @@ df528AR214 <- data.frame(ui, vi, wi)#creates data frame
 p6 <- ggplot(df528AR214, aes(x= wi, y= vi)) +
   geom_point() +
   xlab(TeX('$w_i$')) +
-  ylab(TeX('$v_i$'))+
-  scale_y_continuous(limits = c(-2, 2), breaks = c(-2, 0, 2))+
-  scale_x_continuous(limits = c(-2, 2), breaks = c(-2, 0, 2))+
+  xlim(-0.5, 0.5) +
+  ylim(-1, 0.5) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 6))
+  theme(axis.text = element_text(face = "plain", size = 4))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
@@ -330,10 +327,10 @@ df629MON15 <- data.frame(ui, vi, wi)#creates data frame
 #plots at each depth
 p9 <- ggplot(df629MON15, aes(x= wi, y= vi)) +
   geom_point() +
-  xlim(-0.5, 0.5) +
-  ylim(-0.8, 0.8) +
   xlab(TeX('$w_i$')) +
   ylab(TeX('$v_i$'))+
+  scale_y_continuous(limits = c(-2, 2), breaks = c(-2, 0, 2))+
+  scale_x_continuous(limits = c(-2, 2), breaks = c(-2, 0, 2))+
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
   theme(axis.text = element_text(face = "plain", size = 6))
@@ -373,10 +370,10 @@ df629MON15 <- data.frame(ui, vi, wi)#creates data frame
 #plots at each depth
 p10 <- ggplot(df629MON15, aes(x= wi, y= vi)) +
   geom_point() +
-  xlim(-0.5, 0.5) +
-  ylim(-0.75, 0.75) +
   xlab(TeX('$w_i$')) +
   ylab(TeX('$v_i$'))+
+  scale_y_continuous(limits = c(-2, 2), breaks = c(-2, 0, 2))+
+  scale_x_continuous(limits = c(-2, 2), breaks = c(-2, 0, 2))+
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
   theme(axis.text = element_text(face = "plain", size = 6)
@@ -555,7 +552,7 @@ p15 <- ggplot(df629MON15, aes(x= wi, y= vi)) +
   ylab(TeX('$v_i$'))+
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 12))
+  theme(axis.text = element_text(face = "plain", size = 6))
 
 ```
 
@@ -597,7 +594,7 @@ p16 <- ggplot(df629MON15, aes(x= wi, y= vi)) +
   ylab(TeX('$v_i$'))+
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 12))
+  theme(axis.text = element_text(face = "plain", size = 6))
 
 ```
 
@@ -639,7 +636,7 @@ p17 <- ggplot(df629MON15, aes(x= wi, y= vi)) +
   ylab(TeX('$v_i$'))+
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 12))
+  theme(axis.text = element_text(face = "plain", size = 6))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
@@ -680,7 +677,7 @@ p18 <- ggplot(df629MON15, aes(x= wi, y= vi)) +
   ylab(TeX('$v_i$'))+
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 12))
+  theme(axis.text = element_text(face = "plain", size = 6))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
