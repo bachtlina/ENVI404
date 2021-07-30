@@ -1,0 +1,23 @@
+---
+title: "US Disasters"
+author: Alanna Bachtlin
+date: "7/13/2021"
+output: html_document
+---
+```{r include=FALSE}
+disasters <- read_csv("https://duq.box.com/shared/static/48g71l89th4prmlnmp5wupkksaf29gzy.csv", skip = 6, col_names = TRUE, col_types = "ciifffffcfffffccfffccnnfcccciiiiiiiiiiinnnn")
+
+damages <- disasters %>%
+     filter (Country == "United States of America (the)") %>% # dplyr::filter keeps only rows from USA
+     group_by(Year) %>% #group_by will pass the data sorted by year and will cause summarize to sum by year 
+     summarize(tdam = 1e-6 * sum(`Total Damages ('000 US$)`, na.rm = TRUE)) # thousands is changed to billions
+```
+ 
+A plot
+``` {r echo=FALSE}
+ggplot(damages, aes(x = Year, y = tdam)) +
+     geom_bar(stat = "identity", fill = "steelblue") + # geom_bar tells it to make a bar graph, identity is multiply by one (keeps data the same), fill is for the color
+     labs(x = "Year", y = "Total Damages(billion USD)") +
+     xlim(1900,2025) +
+     theme(panel.background = element_blank(), panel.border = element_rect(fill = NA), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
