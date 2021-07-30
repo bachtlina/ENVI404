@@ -28,7 +28,7 @@ Reynolds Stress Tensor Equation:
 \sigma_{ij} = \rho_0 \begin{bmatrix} \overline{u^2} & \overline{uv} & \overline{uw}\\ \overline{vu} & \overline{v^2} & \overline{vw}\\ \overline{wu} & \overline{wv} & \overline{w^2} \end{bmatrix}
 \end{equation}
 
-Normal stresses are diagonal in the tensor and sheer stresses are off-diagonal. The turbulent fluctuations exert a stress on the flow. If the graph appears isotrophic, there is no directional preference but if the graph appears anisotropic 
+Normal stresses are diagonal in the tensor and sheer stresses are off-diagonal. The turbulent fluctuations exert a stress on the flow. If the graph appears isotrophic, there is no directional preference and the average mean of the fluctuations is zero but if the graph appears anisotrophic there is a directional preference and the mean fluctuations are not zero. 
 
 
 
@@ -117,6 +117,7 @@ p3 <- ggplot(df528AR214, aes(x= wi, y= vi)) +
   geom_point() +
   xlim(-0.5, 0.5) +
   ylim(-0.5, 0.5) +
+  theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
   theme(axis.text = element_text(face = "plain", size = 4))
@@ -156,6 +157,7 @@ df528AR214 <- data.frame(ui, vi, wi)#creates data frame
 p4 <- ggplot(df528AR214, aes(x= wi, y= vi)) +
   geom_point() +
   ylab(TeX('$v_i$'))+
+  theme(axis.title.x = element_blank()) +
   xlim(-0.5, 0.5) +
   ylim(-0.5, 0.5) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
@@ -197,6 +199,7 @@ p5 <- ggplot(df528AR214, aes(x= wi, y= vi)) +
   geom_point() +
   xlim(-0.5, 0.5) +
   ylim(-0.5, 0.5) +
+  theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
   theme(axis.text = element_text(face = "plain", size = 4))
@@ -235,6 +238,7 @@ df528AR214 <- data.frame(ui, vi, wi)#creates data frame
 p6 <- ggplot(df528AR214, aes(x= wi, y= vi)) +
   geom_point() +
   xlab(TeX('$w_i$')) +
+  theme(axis.title.y = element_blank()) +
   xlim(-0.5, 0.5) +
   ylim(-1, 0.5) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
