@@ -17,10 +17,10 @@ library(ggplot2)
 library(lubridate)
 library(latex2exp)
 library(gridExtra)
+library(grid)
 ```
 
-##Introduction
-     Data was collected using an acoustic Doppler velocimeter and a dissolved oxygen logger. For each site, one along the Allegheny River and two along the Monongahela River, graphs of height vs dissolved oxygen and height vs velocity are shown. The Reynolds Stress Tensors are also shown for four different depths.
+   Data was collected using an acoustic Doppler velocimeter and a dissolved oxygen logger. For each site, one along the Allegheny River and two along the Monongahela River, graphs of height vs dissolved oxygen and height vs velocity are shown. The Reynolds Stress Tensor graphs are also shown for four different depths. From this data collection, the boundary layer can be studied. 
      
 Reynolds Stress Tensor Equation:
 
@@ -29,6 +29,7 @@ Reynolds Stress Tensor Equation:
 \end{equation}
 
 Normal stresses are diagonal in the tensor and sheer stresses are off-diagonal. The turbulent fluctuations exert a stress on the flow. If the graph appears isotrophic, there is no directional preference and the average mean of the fluctuations is zero but if the graph appears anisotrophic there is a directional preference and the mean fluctuations are not zero. 
+
 
 
 
@@ -44,8 +45,7 @@ p1 <- ggplot(DO528AR214, aes(x = DO.mg.l. , y= height.m.))+
   labs(x = "DO (mg/l)", y = "Height (m)") +
   ggtitle("Dissolved Oxygen") +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
-  theme(axis.text = element_text(face = "plain", size = 6)) +
-  theme(aspect.ratio = 24/9)
+  theme(axis.text = element_text(face = "plain", size = 8)) 
   
 ```
 
@@ -56,8 +56,7 @@ p2 <- ggplot(DO528AR214, aes(x = U.m.s. , y= height.m.))+
   labs(x = "Average Velocity (m/s)", y = "Height (m)") +
   ggtitle("Velocity") +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
-  theme(axis.text = element_text(face = "plain", size = 6)) +
-  theme(aspect.ratio = 20/9)
+  theme(axis.text = element_text(face = "plain", size = 8)) 
 
 ```
 
@@ -120,7 +119,7 @@ p3 <- ggplot(df528AR214, aes(x= wi, y= vi)) +
   theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 4))
+  theme(axis.text = element_text(face = "plain", size = 4.5))
   
 ```
 
@@ -156,13 +155,12 @@ df528AR214 <- data.frame(ui, vi, wi)#creates data frame
 #plots at each depth
 p4 <- ggplot(df528AR214, aes(x= wi, y= vi)) +
   geom_point() +
-  ylab(TeX('$v_i$'))+
-  theme(axis.title.x = element_blank()) +
+  theme(axis.title.x = element_blank(), axis.title.y = element_blank()) +
   xlim(-0.5, 0.5) +
   ylim(-0.5, 0.5) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 4))
+  theme(axis.text = element_text(face = "plain", size = 4.5))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
@@ -202,7 +200,7 @@ p5 <- ggplot(df528AR214, aes(x= wi, y= vi)) +
   theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 4))
+  theme(axis.text = element_text(face = "plain", size = 4.5))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
@@ -237,20 +235,19 @@ df528AR214 <- data.frame(ui, vi, wi)#creates data frame
 #plots at each depth
 p6 <- ggplot(df528AR214, aes(x= wi, y= vi)) +
   geom_point() +
-  xlab(TeX('$w_i$')) +
-  theme(axis.title.y = element_blank()) +
+  theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
   xlim(-0.5, 0.5) +
   ylim(-1, 0.5) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 4))
+  theme(axis.text = element_text(face = "plain", size = 4.5))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
-grid.arrange(p1, p2, arrangeGrob(p3, p4, p5, p6, nrow=4), nrow=1, top = "Allegheny River")
+grid.arrange(p1, p2, arrangeGrob(p3, p4, p5, p6, nrow=4, left = textGrob(TeX('$v_i$'), rot = 90, vjust = 1), bottom = textGrob(TeX('$w_i$'), vjust = 1)), nrow=1, top = "Allegheny River")
 ```
 
-
+   There does not appear to be a significant difference among the Reynolds Stress Tensors throughout the profile of the Allegheny River. 
 ```{r warning=FALSE, echo=FALSE}
 #Monongahela River
 #cable crossing (CC)
@@ -264,7 +261,7 @@ p7 <- ggplot(cable_crossing_DO, aes(x = DO.mg.l. , y= height.m.))+
   labs(x = "DO (mg/l)", y = "Height(m)") +
   ggtitle("Dissolved Oxygen") +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
-  theme(axis.text = element_text(face = "plain", size = 12))
+  theme(axis.text = element_text(face = "plain", size = 8))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
@@ -274,7 +271,7 @@ p8 <- ggplot(cable_crossing_DO, aes(x = U.m.s. , y= height.m.))+
   labs(x = "Average Velocity (m/s)", y = "Height(m)") +
   ggtitle("Velocity") +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
-  theme(axis.text = element_text(face = "plain", size = 12))
+  theme(axis.text = element_text(face = "plain", size = 8))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
@@ -331,13 +328,12 @@ df629MON15 <- data.frame(ui, vi, wi)#creates data frame
 #plots at each depth
 p9 <- ggplot(df629MON15, aes(x= wi, y= vi)) +
   geom_point() +
-  xlab(TeX('$w_i$')) +
-  ylab(TeX('$v_i$'))+
-  scale_y_continuous(limits = c(-2, 2), breaks = c(-2, 0, 2))+
-  scale_x_continuous(limits = c(-2, 2), breaks = c(-2, 0, 2))+
+  xlim(-1, 1) +
+  ylim(-1, 1) +
+  theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 6))
+  theme(axis.text = element_text(face = "plain", size = 4.5))
 
 ```
 
@@ -374,16 +370,15 @@ df629MON15 <- data.frame(ui, vi, wi)#creates data frame
 #plots at each depth
 p10 <- ggplot(df629MON15, aes(x= wi, y= vi)) +
   geom_point() +
-  xlab(TeX('$w_i$')) +
-  ylab(TeX('$v_i$'))+
-  scale_y_continuous(limits = c(-2, 2), breaks = c(-2, 0, 2))+
-  scale_x_continuous(limits = c(-2, 2), breaks = c(-2, 0, 2))+
+  xlim(-1, 1) +
+  ylim(-1, 1) +
+  theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 6)
+  theme(axis.text = element_text(face = "plain", size = 4.5))
 ```
 
-```{r warning=FALSE}
+```{r warning=FALSE, echo=FALSE}
 start <- as.numeric(ymd_hms("2021-06-29 15:17:00")) # Enter start time here as "YYYY-MM-DD HH:MM:SS" in 24-hour time
 end <- as.numeric(ymd_hms("2021-06-29 15:19:00")) # End time, same format
 for (i in 1:nrow(dat)) {
@@ -416,15 +411,14 @@ df629MON15 <- data.frame(ui, vi, wi)#creates data frame
 p11 <- ggplot(df629MON15, aes(x= wi, y= vi)) +
   geom_point() +
   xlim(-3, 3) +
-  ylim(-5, 5) +
-  xlab(TeX('$w_i$')) +
-  ylab(TeX('$v_i$'))+
+  ylim(-6, 6) +
+  theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 6))
+  theme(axis.text = element_text(face = "plain", size = 4.5))
 ```
 
-```{r warning=FALSE}
+```{r warning=FALSE, echo=FALSE}
 start <- as.numeric(ymd_hms("2021-06-29 15:19:00")) # Enter start time here as "YYYY-MM-DD HH:MM:SS" in 24-hour time
 end <- as.numeric(ymd_hms("2021-06-29 15:21:00")) # End time, same format
 for (i in 1:nrow(dat)) {
@@ -456,22 +450,21 @@ df629MON15 <- data.frame(ui, vi, wi)#creates data frame
 #plots at each depth
 p12 <- ggplot(df629MON15, aes(x= wi, y= vi)) +
   geom_point() +
-  xlim(-0.5, 0.5) +
-  ylim(-0.5, 0.5) +
-  xlab(TeX('$w_i$')) +
-  ylab(TeX('$v_i$'))+
+  xlim(-1, 1) +
+  ylim(-2, 1) +
+  theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 6))
+  theme(axis.text = element_text(face = "plain", size = 4.5))
 
 ```
 
-```{r warning=FALSE}
-grid.arrange(p7, p8, arrangeGrob(p9, p10, p11, p12, nrow=4), nrow=1, top = "Monongahela River(cable crossing)")
+```{r warning=FALSE, echo=FALSE}
+grid.arrange(p7, p8, arrangeGrob(p9, p10, p11, p12, nrow=4, left = textGrob(TeX('$v_i$'), rot = 90, vjust = 1), bottom = textGrob(TeX('$w_i$'), vjust = 1)), nrow=1, top = "Monongahela River(cable crossing)")
 ```
 
-
-```{r warning=FALSE}
+   From these results collected in the Monongahela River near the cable crossing, the boundary layer seems to appear as the third Reynolds Stress Tensor graph shown is much larger than the other graphs. Also on the velocity graph, the three bottom data points are separated from the top four, signifying the appearance of the boundary layer. 
+```{r warning=FALSE, echo=FALSE}
 #birmingham bridge (BB)
 #height vs DO
 birmingham_bridge_DO <- read.csv("C:\\Users\\duquesne\\Documents\\Alanna\\DOBirminghamBridge629.csv")
@@ -482,20 +475,20 @@ p13 <- ggplot(birmingham_bridge_DO, aes(x = DO.mg.l. , y= height.m.))+
   labs(x = "DO (mg/l)", y = "Height (m)") +
   ggtitle("Dissolved Oxygen") +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
-  theme(axis.text = element_text(face = "plain", size = 12))
+  theme(axis.text = element_text(face = "plain", size = 8))
 ```
 
-```{r warning=FALSE}
+```{r warning=FALSE, echo=FALSE}
 #height vs u
 p14 <- ggplot(birmingham_bridge_DO, aes(x = U.m.s. , y= height.m.))+
   geom_point() +
   labs(x = "Average Velocity(m/s)", y = "Height (m)") +
   ggtitle("Velocity") +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
-  theme(axis.text = element_text(face = "plain", size = 12))
+  theme(axis.text = element_text(face = "plain", size = 8))
 ```
 
-```{r warning=FALSE}
+```{r warning=FALSE, echo=FALSE}
 #stress tensors
 
 #birmingham bridge goes from 15:35:00-15:49:00
@@ -552,11 +545,10 @@ p15 <- ggplot(df629MON15, aes(x= wi, y= vi)) +
   geom_point() +
   xlim(-5, 5) +
   ylim(-6, 6) +
-  xlab(TeX('$w_i$')) +
-  ylab(TeX('$v_i$'))+
+  theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 6))
+  theme(axis.text = element_text(face = "plain", size = 4.5))
 
 ```
 
@@ -594,11 +586,10 @@ p16 <- ggplot(df629MON15, aes(x= wi, y= vi)) +
   geom_point() +
   xlim(-0.5, 0.5) +
   ylim(-0.5, 0.5) +
-  xlab(TeX('$w_i$')) +
-  ylab(TeX('$v_i$'))+
+  theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 6))
+  theme(axis.text = element_text(face = "plain", size = 4.5))
 
 ```
 
@@ -636,11 +627,10 @@ p17 <- ggplot(df629MON15, aes(x= wi, y= vi)) +
   geom_point() +
   xlim(-1, 1) +
   ylim(-1, 1) +
-  xlab(TeX('$w_i$')) +
-  ylab(TeX('$v_i$'))+
+  theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 6))
+  theme(axis.text = element_text(face = "plain", size = 4.5))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
@@ -677,13 +667,17 @@ p18 <- ggplot(df629MON15, aes(x= wi, y= vi)) +
   geom_point() +
   xlim(-3, 3) +
   ylim(-7, 7) +
-  xlab(TeX('$w_i$')) +
-  ylab(TeX('$v_i$'))+
+  theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1)+
-  theme(axis.text = element_text(face = "plain", size = 6))
+  theme(axis.text = element_text(face = "plain", size = 4.5))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
-grid.arrange(p13, p14, arrangeGrob(p15, p16, p17, p18, nrow=4), nrow=1, top = "Monongahela River (Birmingham Bridge")
+grid.arrange(p13, p14, arrangeGrob(p15, p16, p17, p18, nrow=4, left = textGrob(TeX('$v_i$'), rot = 90, vjust = 1), bottom = textGrob(TeX('$w_i$'), vjust = 1)), nrow=1, top = "Monongahela River (Birmingham Bridge)")
 ```
+
+  The bottom two Reynolds Stress Tensor graphs are larger than the second Reynolds Stress Tensor graph which could signify the appearance of the boundary layer. The depth in this section of the Monongahela River underneath the Birmingham Bridge is approximately twice the depth of the cable crossing section. 
+  
+  Overall, the results in the Monongahela River are promising when studying the boundary layer due to the difference in the Reynolds Stress Tensor graphs and the velocity graph for the cable crossing section. More data collection and analysis is needed in the future to further study the boundary layer. 
+    
