@@ -14,7 +14,7 @@ damages <- disasters %>%
 # summarize is unique because it both adds a new column/variable and collapses the overall number of rows
 
 ggplot(damages, aes(x = Year, y = tdam)) +
-     geom_bar(stat = "identity", fill = "darkgreen") + # geom_bar tells it to make a bar graph, identity is multiply by one (keeps data the same), fill is for the color
+     geom_bar(stat = "identity", fill = "steelblue") + # geom_bar tells it to make a bar graph, identity is multiply by one (keeps data the same), fill is for the color
      labs(x = "Year", y = "Total Damages(billion USD)") +
      xlim(1900,2025) +
      theme(panel.background = element_blank(), panel.border = element_rect(fill = NA), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
