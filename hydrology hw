@@ -1,0 +1,18 @@
+
+library(dplyr)
+library(readr)
+library(tidyr)
+library(lubridate)
+library(ggplot2)
+
+setwd ('/Users/alannabachtlin/Desktop/2021/Fall/Hydrology/precipevap_hw')
+arm_data <- read_csv("evaporation_ARM_data.csv")
+discharge_data <- read_csv("dischargeusgs.csv")
+precip_data <- read_csv("Lamont,OK_precip.csv")
+
+
+arm_data %/%
+  group_by(Date) %/%
+  summarize(Rn_daily = mean(net_radiation), Bo_daily = mean(bowen_ratio), Le_daily = mean(latent_heat_flux), H_daily = mean(sensible_heat_flux))
+ 
+  #getting "Error in UseMethod("group_by") : no applicable method for 'group_by' applied to an object of class "function", not sure how to properly use group_by              
